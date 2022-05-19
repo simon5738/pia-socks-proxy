@@ -1,25 +1,24 @@
-version: '3'
+version: '3.8'
 services:
   pia_socks_proxy:
     build: https://github.com/simon5738/pia-socks-proxy.git
     container_name: pia-socks-proxy
-    image: simon5738/pia-socks-proxy
+    #image: simon5738/pia-socks-proxy
+    network_mode: host #to allow connections from local network
     cap_add:
       - NET_ADMIN
     devices:
       - /dev/net/tun
     environment:
-      - REGION=US East
+      - REGION=netherlands
       - USERNAME=PIA-USERNAME
       - PASSWORD=PIA-PASSWORD
       - DNS=1.1.1.1@853#cloudflare-dns.com 1.0.0.1@853#cloudflare-dns.com
-      - PROTOCOL="udp"
-      - ENCRYPTION="strong"
-    networks:
-      - pia_socks_proxy
+      - PROTOCOL=udp
+      - ENCRYPTION=strong
     ports:
       - 1080:1080
+      - 1080:1080/udp
     restart: always
 
-networks:
-  pia_socks_proxy:
+
